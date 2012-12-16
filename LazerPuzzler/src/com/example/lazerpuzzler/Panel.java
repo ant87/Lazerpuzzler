@@ -27,7 +27,7 @@ import android.view.View.OnTouchListener;
 
 class Panel extends View implements OnTouchListener, Observer
 {
-	private static final int[] colours = new int[] {Color.YELLOW,Color.GREEN,0xFFf0f0f0, Color.CYAN,Color.MAGENTA,Color.WHITE};
+	private static final int[] colours = new int[] {Color.YELLOW,Color.GREEN,Color.BLUE, Color.CYAN,Color.MAGENTA,Color.WHITE};
 
 	
 	static int test1 = 0;
@@ -50,7 +50,8 @@ class Panel extends View implements OnTouchListener, Observer
 
 	Paint targetDefaultBlurPaint = new Paint();
 	Paint targetSelectedPaint = new Paint();
-	Paint targetHitPaint = new Paint();
+	Paint targetHitFillPaint = new Paint();
+	Paint targetDefaultFillPaint = new Paint();
 	
 
 	Paint targetDefaultPaint = new Paint();
@@ -82,8 +83,14 @@ class Panel extends View implements OnTouchListener, Observer
 	    		   1,1,1,1,1
 	              ,0,0,0,0,0
 	              ,0,0,0,0,0,
-	              0.5f,0.5f,0.5f,0.5f,0.5f,});;// = new ColorMatrix();
-	    ColorMatrixColorFilter cmcf;
+	              0.5f,0.5f,0.5f,0.5f,0.5f,});// = new ColorMatrix();
+	              
+	              ColorMatrix matrix2=  new ColorMatrix(new float[]{
+	            		  0.5f,0.5f,0.5f,0.5f,0.5f
+	   	              ,0.5f,0.5f,0.5f,0.5f,0.5f
+	   	           ,0.5f,0.5f,0.5f,0.5f,0.5f,
+	   	              0.5f,0.5f,0.5f,0.5f,0.5f,});// = new ColorMatrix();
+	 //  ColorMatrixColorFilter cmcf;
 	    
 	   
 	    
@@ -137,7 +144,8 @@ class Panel extends View implements OnTouchListener, Observer
 
 		//targetHitPaint.setColor(Color.RED );
 		//targetHitPaint.setMaskFilter(new BlurMaskFilter(axis/20, BlurMaskFilter.Blur.NORMAL));
-		targetHitPaint.setColorFilter(new ColorMatrixColorFilter(matrix));
+		targetHitFillPaint.setColorFilter(new ColorMatrixColorFilter(matrix));
+		targetDefaultFillPaint.setColorFilter(new ColorMatrixColorFilter(matrix2));
 		
 		/*new GradientDrawable(
 				GradientDrawable.Orientation.BR_TL, new int[] { Color.BLACK,
@@ -159,8 +167,7 @@ class Panel extends View implements OnTouchListener, Observer
 		
 		myIcon = getResources().getDrawable( R.drawable.ic_launcher );
 		
-		
-		cmcf = new ColorMatrixColorFilter(matrix);
+	
 		
 	}
 	
@@ -457,7 +464,11 @@ class Panel extends View implements OnTouchListener, Observer
 				targetHitPaint.draw(canvas);*/
 				
 				//myIcon.setColorFilter(cmcf);
-				canvas.drawCircle(target.x,target.y,radius,targetHitPaint);
+				canvas.drawCircle(target.x,target.y,radius,targetHitFillPaint);
+			}
+			else
+			{
+				canvas.drawCircle(target.x,target.y,radius,targetDefaultFillPaint);	
 			}
 			/*myIcon.setBounds(target.x - (radius+5),
 					target.y - (radius+5), target.x
