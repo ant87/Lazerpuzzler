@@ -418,7 +418,7 @@ class Panel extends View implements OnTouchListener, Observer
 			
 			if(id == -1)
 			{
-				targetDefaultBlurPaint.setColor(Color.BLUE);
+				targetDefaultBlurPaint.setColor(Color.WHITE);
 				
 			}
 			else if(id < colours.length)
